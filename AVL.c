@@ -77,7 +77,7 @@ struct node* insert(struct node* dugum, int data)
         dugum->left = insert(dugum->left, data);
     else if (data > dugum->data)
         dugum->right = insert(dugum->right, data);
-    else //EĞER GİRİLEN SAYI ZATEN AĞAÇTA VARSA *DATA==DUGUM->DATA* DİREKT HİÇBİR İŞLEM YAPMADAN RETURN EDİYORUM. hehhhee
+    else //EĞER GİRİLEN SAYI ZATEN AĞAÇTA VARSA *DATA==DUGUM->DATA* DİREKT HİÇBİR İŞLEM YAPMADAN RETURN EDİYORUM.
         return dugum;
  
     dugum->height = 1 + max(height(dugum->left),height(dugum->right)); //BURADA HER VERİ GİRİŞİNDE YÜKSEKLİĞİ GÜNCELLİYORUM.
