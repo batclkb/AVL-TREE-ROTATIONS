@@ -11,14 +11,14 @@ struct node
 
 int height(struct node *N)
 {
-    if (N == NULL)//yapraklarýn çocuklarý NULL olduðundan dolayý yüksekliðe eklemicez.
+    if (N == NULL)//yapraklarÄ±n Ã§ocuklarÄ± NULL olduÄŸundan dolayÄ± yÃ¼ksekliÄŸe eklemicez.
         return 0;
     return N->height;
 }
 
 int max(int a, int b)
 {
-    return (a > b)? a : b;//A, B'DEN BÜYÜKSE A'YI RETURN EDÝYORUZ. B, A'DAN BÜYÜKSE B'YÝ RETURN EDÝYORUZ.
+    return (a > b)? a : b;//A, B'DEN BÃœYÃœKSE A'YI RETURN EDÄ°YORUZ. B, A'DAN BÃœYÃœKSE B'YÄ° RETURN EDÄ°YORUZ.
 }
 
 struct node* newNode(int data)
@@ -65,7 +65,7 @@ int getBalance(struct node *N)
 {
     if (N == NULL)
         return 0;
-    return height(N->left)-height(N->right);//hehhheee leftin yüksekliðinden rightin yüksekliðini çýkarýyoruz ve bu sayede AVL aðacýnýn en kritik kýsmýna geliyoruzz..
+    return height(N->left)-height(N->right);//hehhheee leftin yÃ¼ksekliÄŸinden rightin yÃ¼ksekliÄŸini Ã§Ä±karÄ±yoruz ve bu sayede AVL aÄŸacÄ±nÄ±n en kritik kÄ±smÄ±na geliyoruzz..
 }
  
 struct node* insert(struct node* dugum, int data)
@@ -77,33 +77,100 @@ struct node* insert(struct node* dugum, int data)
         dugum->left = insert(dugum->left, data);
     else if (data > dugum->data)
         dugum->right = insert(dugum->right, data);
-    else //EÐER GÝRÝLEN SAYI ZATEN AÐAÇTA VARSA *DATA==DUGUM->DATA* DÝREKT HÝÇBÝR ÝÞLEM YAPMADAN RETURN EDÝYORUM. hehhhee
+    else //EÄžER GÄ°RÄ°LEN SAYI ZATEN AÄžAÃ‡TA VARSA *DATA==DUGUM->DATA* DÄ°REKT HÄ°Ã‡BÄ°R Ä°ÅžLEM YAPMADAN RETURN EDÄ°YORUM. hehhhee
         return dugum;
  
-    dugum->height = 1 + max(height(dugum->left),height(dugum->right)); //BURADA HER VERÝ GÝRÝÞÝNDE YÜKSEKLÝÐÝ GÜNCELLÝYORUM.
+    dugum->height = 1 + max(height(dugum->left),height(dugum->right)); //BURADA HER VERÄ° GÄ°RÄ°ÅžÄ°NDE YÃœKSEKLÄ°ÄžÄ° GÃœNCELLÄ°YORUM.
  
     int balance = getBalance(dugum);
  
     // Left Left
-    if (balance > 1 && data < dugum->left->data)//BALANCE 1'DEN BÜYÜKSE YANÝ SOL TARAFTA BÝR DENGESÝZLÝK VAR DEMEK OLUYOR. AYNI ZAMANDA DA DATA KÜÇÜKSE RÝGHTROTATE YAPIYORUZ.
+    if (balance > 1 && data < dugum->left->data)//BALANCE 1'DEN BÃœYÃœKSE YANÄ° SOL TARAFTA BÄ°R DENGESÄ°ZLÄ°K VAR DEMEK OLUYOR. AYNI ZAMANDA DA DATA KÃœÃ‡ÃœKSE RÄ°GHTROTATE YAPIYORUZ.
         return rightRotate(dugum);
     // Right Right
-    if (balance < -1 && data > dugum->right->data)//BALANCE -1'DEN KÜÇÜKSE YANÝ SAÐ TARAFTA BÝR DENGESÝZLÝK DURUMU OLUYOR. AYNI ZAMANDA DATA BÜYÜKSE LEFTROTATE YAPIYORUZ.
+    if (balance < -1 && data > dugum->right->data)//BALANCE -1'DEN KÃœÃ‡ÃœKSE YANÄ° SAÄž TARAFTA BÄ°R DENGESÄ°ZLÄ°K DURUMU OLUYOR. AYNI ZAMANDA DATA BÃœYÃœKSE LEFTROTATE YAPIYORUZ.
         return leftRotate(dugum);
     // Left Right
-    if (balance > 1 && data > dugum->left->data)//BALANCE 1DEN BÜYÜK VE DATA DA BÜYÜKSE SOL SAÐ DURUMU OLUR. BU YÜZDEN ÖNCE LEFTROTATE YAPIP SONRA RIGHTROTATE YAPIYORUZ.
+    if (balance > 1 && data > dugum->left->data)//BALANCE 1DEN BÃœYÃœK VE DATA DA BÃœYÃœKSE SOL SAÄž DURUMU OLUR. BU YÃœZDEN Ã–NCE LEFTROTATE YAPIP SONRA RIGHTROTATE YAPIYORUZ.
     {
         dugum->left = leftRotate(dugum->left);
         return rightRotate(dugum);
     }
     // Right Left
-    if (balance < -1 && data<dugum->right->data)//BALANCE -1DEN KÜÇÜK VE DATA DA KÜÇÜKSE SAÐ SOL DURUMU OLUR. ÖNCE RIGHTROTATE YAPIP SONRA LEFTROTATE YAPIYORUZ.
+    if (balance < -1 && data<dugum->right->data)//BALANCE -1DEN KÃœÃ‡ÃœK VE DATA DA KÃœÃ‡ÃœKSE SAÄž SOL DURUMU OLUR. Ã–NCE RIGHTROTATE YAPIP SONRA LEFTROTATE YAPIYORUZ.
     {
         dugum->right = rightRotate(dugum->right);
         return leftRotate(dugum);
     }
-//BU ÝÞLEMLER HER YENÝ VERÝ GÝRÝÞÝNDE KONTROL EDÝLÝYOR. HERHANGÝ BÝR DENGESÝZLÝK OLUÞTUÐUNDA 4 DURUMDAN BÝRÝSÝNÝ GERÇEKLEÞTÝREREK AÐACIMIZIN DENGE DURUMUNU TEKRAR SAÐLIYORUZ..
+//BU Ä°ÅžLEMLER HER YENÄ° VERÄ° GÄ°RÄ°ÅžÄ°NDE KONTROL EDÄ°LÄ°YOR. HERHANGÄ° BÄ°R DENGESÄ°ZLÄ°K OLUÅžTUÄžUNDA 4 DURUMDAN BÄ°RÄ°SÄ°NÄ° GERÃ‡EKLEÅžTÄ°REREK AÄžACIMIZIN DENGE DURUMUNU TEKRAR SAÄžLIYORUZ..
     return dugum;
+}
+
+struct node *Delete(struct node *root, int data)
+{
+	if (root == NULL)
+		return NULL;
+	if (data > root->data)
+		root->right = Delete(root->right, data);
+	else if (data < root->data)
+		root->left = Delete(root->left, data);
+
+	if (data == root->data)
+	{
+		struct node *temp = root;	// silinecek Ã¶ÄŸeyi geÃ§ici pointera aktarÄ±yoruz, iÅŸlem sonunda free() yapÄ±caz.
+		if (root->left == NULL && root->right == NULL)
+		{
+			free(root);
+			return NULL;
+		}
+		if (root->left != NULL)						
+		{
+			struct node *ptr = root->left;					
+			if (root->right != NULL)				
+			{
+				root = root->right;					
+				struct node *ptr2 = root;
+				while (ptr2->left != NULL)
+				ptr2 = ptr2->left;
+			
+				ptr2->left = ptr;					
+				ptr2->height = 1 +max(height(ptr2->left), height(ptr2->right));	// yÃ¼kseklik ayarÄ±nÄ± gÃ¼ncelliyorum.
+			}
+			else	// rootun SAÄž Ã§ocuÄŸu NULL ise, SOL Ã§ocuÄŸunu root yap.
+				root = ptr;
+		}
+		else	// rootun SOL Ã§ocuÄŸu NULL ise, SAÄž Ã§ocuÄŸunu root yap.
+			root = root->right;
+		free(temp);
+	}
+	if (root == NULL)	//	Veri bulunmadÄ±ysa NULL dÃ¶n.
+		return NULL;
+	//	YÃœKSEKLÄ°K AYARINI GÃœNCELLÄ°YORUM
+	root->height = 1 + max(height(root->left), height(root->right));
+	//	DENGESÄ°ZLÄ°K KONTROLÃœ
+	int balance = getBalance(root);
+	//	DURUM KONTROL
+	if (balance > 1)
+	{
+		if (getBalance(root->left) > 0)
+			return rightRotate(root);
+		else
+		{
+			root->left = leftRotate(root->left);
+			return rightRotate(root);
+		}
+	}
+	else if (balance < -1)
+	{
+		if (getBalance(root->right) < 0)
+			return leftRotate(root);
+		else
+		{
+		root->right = rightRotate(root->right);
+		return leftRotate(root);
+		}
+	}
+	return root;
 }
  
 void preOrder(struct node *root)
@@ -127,7 +194,7 @@ int main()
   root = insert(root, 50);
   root = insert(root, 25);
  
-  /* Böyle olmasý gerekiyor
+  /* BÃ¶yle olmasÄ± gerekiyor
             30
            /  \
          20   40
@@ -138,6 +205,27 @@ int main()
   printf("AVL Agacimiz Preorder : \n");
   preOrder(root);//30-20-10-25-40-50...
   
- 
+  Delete(root,20);
+  printf(" \n AVL Agacimiz Preorder : \n");
+  preOrder(root);//30-25-10-40-50...
+    /* BÃ¶yle olmasÄ± gerekiyor
+            30
+           /  \
+         25   40
+        /       \
+       10       50
+  */
+
+  Delete(root,40);
+  printf(" \n AVL Agacimiz Preorder : \n");
+  preOrder(root);//30-25-10-50...
+     /* BÃ¶yle olmasÄ± gerekiyor
+            30
+           /  \
+         25   50
+        /
+       10
+  */
+
   return 0;
 }
