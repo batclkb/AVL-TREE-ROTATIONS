@@ -49,11 +49,11 @@ struct node *rightRotate(struct node *y)
 struct node *leftRotate(struct node *x)
 {
     struct node *y = x->right;
-    struct node *T2 = y->left;
+    struct node *z = y->left;
  
 
     y->left = x;
-    x->right = T2;
+    x->right = z;
  
     x->height = max(height(x->left),height(x->right)) + 1;
     y->height = max(height(y->left),height(y->right)) + 1;
@@ -65,7 +65,7 @@ int getBalance(struct node *N)
 {
     if (N == NULL)
         return 0;
-    return height(N->left)-height(N->right);//hehhheee leftin yüksekliğinden rightin yüksekliğini çıkarıyoruz ve bu sayede AVL ağacının en kritik kısmına geliyoruzz..
+    return height(N->left)-height(N->right);//leftin yüksekliğinden rightin yüksekliğini çıkarıyoruz ve bu sayede AVL ağacının en kritik kısmına geliyoruzz..
 }
  
 struct node* insert(struct node* dugum, int data)
